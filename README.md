@@ -54,6 +54,8 @@ local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function()
     MyToggle:SetState(newstatus)
     Window:SetTitle("VORTEX PREMIUM random number:" .. tostring(math.random(1,10000)))
     Window:SetSubtitle("This:" .. tostring(math.random(1,10000)))    
+    local tostring(math.random(1,10000)) = Window:CreateTab("Your Tab Name and random:" .. tostring(math.random(1,10000)))
+
 end)
 
 
