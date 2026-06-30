@@ -54,6 +54,8 @@ local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function()
     
     MyToggle:SetText("İdk ?")
     MyToggle:SetState(newstatus)
+    Window:SetTitle("VORTEX PREMIUM" .. tonumber(1, 10000)    -- Başlık "Vortex Hub" iken "VORTEX PREMIUM" olur
+    Window:SetSubtitle("This:" .. tonumber(1,100p0)    -- Alt başlık
 end)
 
 
