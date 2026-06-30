@@ -20,31 +20,34 @@ Aşağıdaki hazır kodu executor'ınıza yapıştırarak arayüzü hemen başla
 
 ```lua
 --// Vortex Hub Başlatılıyor...
-local Ui = loadstring(game:HttpGet('[https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/Source.lua](https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/Source.lua)'))()
+local Vortex = loadstring(game:HttpGet('[https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua"))()
 
--- Ana Pencere Kurulumu
-local MyWindow = Ui.CreateWindow("Vortex Hub", "Loading interface structure...", "negar?")
-
--- Sekmelerin Oluşturulması
+local MyWindow = Vortex.CreateWindow("Vortex Hub", "Dynamic UI Ready", "negar?", "nega")
 local MainTab = MyWindow:CreateTab("Main")
-local VisualsTab = MyWindow:CreateTab("Visuals")
 
--- 1. Paragraph Elementi (Bilgilendirme Alanı)
-MainTab:CreateParagraph("Welcome User!", "This script engine is secure and compatible with all major modern execution units. Please load modules carefully.")
+-- Elemanları değişkenlere kaydediyoruz
+local MyParagraph = MainTab:CreateParagraph("Status: Scanning", "Analyzing background files...")
+local MyTextBox = MainTab:CreateTextBox("WalkSpeed value", "16", function(txt) print(txt) end)
+local MyToggle = MainTab:CreateToggle("God Mode Status", false, function(state) print(state) end)
+local MyButton = MainTab:CreateButton("Update All Elements Dynamically", function() 
+--MyButton:SetText("Click to Test Setters") -- Buton ismini Setter ile güncelledik
+MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
+	--(dont work idk?)MyButton:SetText("Click to Test Setters") -- Buton ismini Setter ile güncelledik
 
--- 2. TextBox Elementi (Dinamik Veri Girişi)
-MainTab:CreateTextBox("Enter custom WalkSpeed value...", function(text)
-	print("User submitted value:", text)
-	-- Örnek kullanım: local speed = tonumber(text) or 16
+	-- 2. TextBox içerik güncelleme testi
+	MyTextBox:SetText(math.random(1,10000))
+	
+	-- 3. Toggle durumunu ve metnini güncelleme testi
+	MyToggle:SetText("God Mode: ENABLED")
+	MyToggle:SetState(true or false)
 end)
 
--- 3. Toggle Elementi (Aç/Kapat Anahtarı)
-MainTab:CreateToggle("Infinite Jump", false, function(state)
-	print("Infinite Jump state:", state)
-end)
+-- Butona basıldığında yukarıdaki fonksiyonların çalışmasını sağlayan test mekanizması:
 
--- 4. Button Elementi (Tetikleyici)
-MainTab:CreateButton("Re-Optimize Matrix", function()
-	print("System optimization ran successfully.")
-end)
+-- Butonun asıl tıklama fonksiyonunu atayalım:
+-- Not: createButton yapısında callback'i manipüle etmek için kütüphanenin orijinal yapısı korunmuştur.
+-- Set fonksiyonlarının tam testi için aşağıda küçük bir gecikmeli (delay) simülasyon yapalım:
+
+
+
 ```
