@@ -70,7 +70,7 @@ local function createPerfectTriangle(parent, size, position, rotation)
 	return triangleFrame
 end
 
-function PremiumLib:CreateWindow(hubName, SubText, LoadingText, LoadingDescription)
+function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescription)
 	local self = setmetatable({}, PremiumLib)
 	self.Tabs = {}
 	self.ActiveTab = nil
