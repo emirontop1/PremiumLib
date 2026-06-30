@@ -50,12 +50,11 @@ local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function()
     -- Büyük/küçük harf hatası düzeltildi (MyParagraph)
     MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
     
-    MyTextBox:SetText(tostring(math.random(1,10000))) -- SetText string bekleyebilir, garantiye almak için tostring ekledik
-    
+    MyTextBox:SetText(tostring(math.random(1,10000))) 
     MyToggle:SetText("İdk ?")
     MyToggle:SetState(newstatus)
-    Window:SetTitle("VORTEX PREMIUM" .. tonumber(1, 10000)    -- Başlık "Vortex Hub" iken "VORTEX PREMIUM" olur
-    Window:SetSubtitle("This:" .. tonumber(1,100p0)    -- Alt başlık
+    Window:SetTitle("VORTEX PREMIUM random number:" .. tonumber(1, 10000)
+    Window:SetSubtitle("This:" .. tonumber(1,10000)    
 end)
 
 
