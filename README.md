@@ -4,7 +4,7 @@ example:
 --// Vortex Hub Başlatılıyor...
 local Vortex = loadstring(game:HttpGet('https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua'))()
 
-local Window = Vortex:CreateWindow(
+local Window = Vortex.CreateWindow(
     "Your Hub Tittle",
     "Your Hub SubTittle",
     "Your Loading Tittle",
@@ -51,10 +51,10 @@ local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function()
     MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
     
     MyTextBox:SetText(tostring(math.random(1,10000))) 
-    MyToggle:SetText("İdk ?")
+    MyToggle:SetText("İdk" .. tostring(math.random(1,10000)))
     MyToggle:SetState(newstatus)
-    Window:SetTitle("VORTEX PREMIUM random number:" .. tonumber(1, 10000)
-    Window:SetSubtitle("This:" .. tonumber(1,10000)    
+    Window:SetTitle("VORTEX PREMIUM random number:" .. tostring(math.random(1,10000)))
+    Window:SetSubtitle("This:" .. tostring(math.random(1,10000)))    
 end)
 
 
@@ -63,3 +63,4 @@ end)
 
 
 good luck... u can edit and make ur own.
+👁️
