@@ -2,92 +2,139 @@ example:
 
 ```lua
 --// Say wallahi bismillah bro...
---// Vortex Hub Initializing...
-local Vortex = loadstring(game:HttpGet('https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua'))()
+-- =============================================================================
+-- ÖRNEK KULLANIM: PremiumLib + Yeni Elementler
+-- =============================================================================
+local PremiumLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/PremiumLib.lua"))()
+-- veya: local PremiumLib = require(path.to.PremiumLib)
 
-local Window = Vortex.CreateWindow(
-    "Your Hub Tittle",
-    "Your Hub SubTittle",
-    "Your Loading Tittle",
-    "Your Loading SubTittle"
+local Window = PremiumLib.CreateWindow(
+	"Vortex Hub",
+	"v1.0.0",
+	"VORTEX",
+	"Yükleniyor, lütfen bekleyin..."
 )
 
-local MainTab = Window:CreateTab("Your Tab Name")
+local MainTab = Window:CreateTab("Ana Sayfa")
 
 ------------------------------------------------------------
--- 🛠️ NEWLY ADDED SECTION COMPONENT
+-- Mevcut elementler (değişmedi)
 ------------------------------------------------------------
-local VisualSection = MainTab:CreateSection("Visual Elements")
+MainTab:CreateSection("Genel")
 
-local status = false 
+MainTab:CreateButton("Test Butonu", function()
+	print("Butona tıklandı!")
+end)
 
-local MyParagraph = MainTab:CreateParagraph(
-    "Text", 
-    "Text But this one" 
+MainTab:CreateToggle("Otomatik Farm", false, function(state)
+	print("Toggle durumu:", state)
+end)
+
+MainTab:CreateTextBox("Kullanıcı adı gir...", "", function(text)
+	print("Girilen metin:", text)
+end)
+
+MainTab:CreateParagraph("Bilgi", "Bu kütüphane PC ve mobil cihazlarda tam destekle çalışır.")
+
+------------------------------------------------------------
+-- YENİ: Dropdown (Tek Seçimli)
+------------------------------------------------------------
+MainTab:CreateSection("Yeni Elementler")
+
+local SilahDropdown = MainTab:CreateDropdown(
+	"Silah Seç",
+	{"AK-47", "M4A1", "AWP", "Desert Eagle"},
+	"AK-47",
+	function(selected)
+		print("Seçilen silah:", selected)
+	end
+)
+-- Dışarıdan değiştirmek istersen:
+-- SilahDropdown:SetValue("AWP")
+-- SilahDropdown:SetOptions({"Yeni Silah 1", "Yeni Silah 2"})
+
+------------------------------------------------------------
+-- YENİ: MultiDropdown (Çoklu Seçim)
+------------------------------------------------------------
+local OzellikMultiDD = MainTab:CreateMultiDropdown(
+	"Aktif Özellikler",
+	{"ESP", "Aimbot", "Speedhack", "Fly", "Noclip"},
+	{"ESP"}, -- varsayılan seçili olanlar
+	function(selectedTable)
+		for name, isOn in pairs(selectedTable) do
+			if isOn then print(name, "aktif") end
+		end
+	end
 )
 
-local MyTextBox = MainTab:CreateTextBox(
-    "My Textbox Name",
-    "Hello My broski", 
-    function(txt)
-        print(txt)
-    end
+------------------------------------------------------------
+-- YENİ: Slider
+------------------------------------------------------------
+local HizSlider = MainTab:CreateSlider(
+	"Yürüme Hızı",
+	16,    -- min
+	200,   -- max
+	16,    -- varsayılan
+	function(value)
+		print("Hız ayarlandı:", value)
+		-- Örnek: game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+	end
+)
+-- HizSlider:SetValue(100)
+
+------------------------------------------------------------
+-- YENİ: ColorPicker
+------------------------------------------------------------
+local ESPRenk = MainTab:CreateColorPicker(
+	"ESP Rengi",
+	Color3.fromRGB(255, 0, 0),
+	function(color)
+		print("Yeni renk:", color)
+	end
+)
+-- ESPRenk:SetValue(Color3.fromRGB(0, 255, 0))
+
+------------------------------------------------------------
+-- YENİ: Keybind
+------------------------------------------------------------
+local MenuTusu = MainTab:CreateKeybind(
+	"Menüyü Aç/Kapat",
+	Enum.KeyCode.RightShift,
+	function(key)
+		print("Yeni tuş atandı:", key.Name)
+	end
 )
 
-local MyToggle = MainTab:CreateToggle("God Mode Status", false, function(state)
-    print(state)
-    status = state 
+------------------------------------------------------------
+-- YENİ: Notify (Toast Bildirimi)
+------------------------------------------------------------
+-- self:Notify(başlık, içerik, süre_saniye, tip)
+-- tip: "Info" | "Success" | "Warning" | "Error"
+
+MainTab:CreateButton("Bildirim Gönder (Success)", function()
+	Window:Notify("Başarılı", "Script başarıyla yüklendi!", 4, "Success")
 end)
 
-local MyButton = MainTab:CreateButton("Update All Elements Dynamically", function() 
-    print("Clicked MyButton")
+MainTab:CreateButton("Bildirim Gönder (Error)", function()
+	Window:Notify("Hata", "Bağlantı kurulamadı, tekrar deneniyor...", 4, "Error")
 end)
+
+MainTab:CreateButton("Bildirim Gönder (Warning)", function()
+	Window:Notify("Uyarı", "Bu işlem geri alınamaz.", 5, "Warning")
+end)
+
+-- Otomatik açılış bildirimi örneği
+Window:Notify("Hoş Geldin", "Vortex Hub başarıyla başlatıldı.", 3, "Info")
 
 ------------------------------------------------------------
--- 🛠️ NEWLY ADDED SUB-TAB COMPONENT
+-- SubTab içinde de aynı elementler kullanılabilir
 ------------------------------------------------------------
-local SubSystem = MainTab:CreateSubTabContainer()
+local SubContainer = MainTab:CreateSubTabContainer()
+local AyarlarSub = SubContainer:CreateSubTab("Gelişmiş Ayarlar")
 
-local SubTab1 = SubSystem:CreateSubTab("Weapon Settings")
-local SubTabButton = SubTab1:CreateButton("Activate Aimbot", function()
-    print("Aimbot triggered!")
-end)
-
-local SubTab2 = SubSystem:CreateSubTab("Other Settings")
-SubTab2:CreateToggle("Speed Hack", false, function(state)
-    print("Speed: ", state)
-end)
-
-------------------------------------------------------------
--- DYNAMIC MODIFIER BUTTON
-------------------------------------------------------------
-local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function() 
-    local newstatus = not status
-    
-    -- Element Updates
-    MyParagraph:SetText("Status: COMPLETE!" .. tostring(math.random(1,10000)), "All parameters successfully verified by the core engine." .. tostring(math.random(1,10000)))
-    MyButton:SetTitle("Random number" .. tostring(math.random(1,10000)))
-    MyTextBox:SetText(tostring(math.random(1,10000))) 
-    MyToggle:SetText("İdk" .. tostring(math.random(1,10000)))
-    MyToggle:SetState(newstatus)
-    
-    -- Window Updates
-    Window:SetTitle("VORTEX PREMIUM random number:" .. tostring(math.random(1,10000)))
-    Window:SetSubtitle("This:" .. tostring(math.random(1,10000)))    
-    
-    -- Section Title Update
-    VisualSection:SetTitle("Updated Section:" .. tostring(math.random(1,10000)))
-    
-    -- Sub-Tab Title Update
-    SubTab1:SetTitle("Rifles " .. tostring(math.random(1,10)))
-
-    -- Runtime Dynamic Tab Creation
-    local randomTabName = "Dynamic Tab " .. tostring(math.random(1,100))
-    local NewCreatedTab = Window:CreateTab(randomTabName)
-    NewCreatedTab:CreateParagraph("New Tab Panel", "This tab was created during runtime via button execution.")
-end)
-
-
+AyarlarSub:CreateSlider("FOV", 60, 120, 90, function(v) print("FOV:", v) end)
+AyarlarSub:CreateDropdown("Tema", {"Koyu", "Açık"}, "Koyu", function(v) print(v) end)
+AyarlarSub:CreateColorPicker("Vurgu Rengi", Color3.fromRGB(255,255,255), function(c) print(c) end)
 
 
 ```
