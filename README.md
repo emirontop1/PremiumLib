@@ -2,6 +2,7 @@ example:
 
 ```lua
 --// Say wallahi bismillah bro...
+--// Vortex Hub Initializing...
 local Vortex = loadstring(game:HttpGet('https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua'))()
 
 local Window = Vortex.CreateWindow(
@@ -45,18 +46,18 @@ end)
 ------------------------------------------------------------
 -- 🛠️ NEWLY ADDED SUB-TAB COMPONENT
 ------------------------------------------------------------
---[[local SubSystem = MainTab:CreateSubTabContainer()
+local SubSystem = MainTab:CreateSubTabContainer()
 
 local SubTab1 = SubSystem:CreateSubTab("Weapon Settings")
 local SubTabButton = SubTab1:CreateButton("Activate Aimbot", function()
     print("Aimbot triggered!")
 end)
 
---local SubTab2 = SubSystem:CreateSubTab("Other Settings")
+local SubTab2 = SubSystem:CreateSubTab("Other Settings")
 SubTab2:CreateToggle("Speed Hack", false, function(state)
     print("Speed: ", state)
 end)
-]]
+
 ------------------------------------------------------------
 -- DYNAMIC MODIFIER BUTTON
 ------------------------------------------------------------
