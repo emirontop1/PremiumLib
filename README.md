@@ -4,29 +4,61 @@ example:
 --// Vortex Hub Başlatılıyor...
 local Vortex = loadstring(game:HttpGet('https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua'))()
 
-local MyWindow = Vortex:CreateWindow("Vortex Hub", "Dynamic UI Ready", "negar?", "nega")
-local MainTab = MyWindow:CreateTab("Main")
+local Window = Vortex:CreateWindow(
+    "Your Hub Tittle",
+    "Your Hub SubTittle",
+    "Your Loading Tittle",
+    "Your Loading SubTittle" -- Tırnak hatası düzeltildi
+)
+
+local MainTab = Window:CreateTab("Your Tab Name")
+
+-- Durumu takip etmek için değişkeni global/local scope olarak dışarıda tanımlıyoruz
+local status = false 
 
 -- Elemanları değişkenlere kaydediyoruz
-local MyParagraph = MainTab:CreateParagraph("Status: Scanning", "Analyzing background files...")
-local MyTextBox = MainTab:CreateTextBox("WalkSpeed value", "16", function(txt) print(txt) end)
-local MyToggle = MainTab:CreateToggle("God Mode Status", false, function(state) print(state) end)
-local MyButton = MainTab:CreateButton("Update All Elements Dynamically", function() 
---MyButton:SetText("Click to Test Setters") -- Buton ismini Setter ile güncelledik
-MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
-	--(dont work idk?)MyButton:SetText("Click to Test Setters") -- Buton ismini Setter ile güncelledik
+local MyParagraph = MainTab:CreateParagraph(
+    "Text", -- Başlık (Title)
+    "Text But this one" -- Açıklama (Description)
+)
 
-	-- 2. TextBox içerik güncelleme testi
-	MyTextBox:SetText(math.random(1,10000))
-	
-	-- 3. Toggle durumunu ve metnini güncelleme testi
-	MyToggle:SetText("God Mode: ENABLED")
-	MyToggle:SetState(true or false)
+local MyTextBox = MainTab:CreateTextBox(
+    "My Textbox Name",
+    "Hello My broski", -- Default text
+    function(txt)
+        print(txt)
+    end
+)
+
+local MyToggle = MainTab:CreateToggle("God Mode Status", false, function(state)
+    print(state)
+    status = state -- Dışarıdaki status değişkenini güncelliyor
 end)
 
--- Note: createButton yapısında callback'i manipüle etmek için kütüphanenin orijinal yapısı korunmuştur.
+local MyButton = MainTab:CreateButton("Update All Elements Dynamically", function() 
+    print("Clicked MyButton")
+end)
+
+local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function() 
+    local newstatus
+    if status == true then
+        newstatus = false
+    else
+        newstatus = true
+    end 
+    
+    -- Büyük/küçük harf hatası düzeltildi (MyParagraph)
+    MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
+    
+    MyTextBox:SetText(tostring(math.random(1,10000))) -- SetText string bekleyebilir, garantiye almak için tostring ekledik
+    
+    MyToggle:SetText("İdk ?")
+    MyToggle:SetState(newstatus)
+end)
+
 
 ```
+
 
 
 good luck... u can edit and make ur own.
