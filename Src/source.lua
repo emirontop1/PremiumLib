@@ -179,33 +179,7 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 	local Bar1 = createSplitBar(-45)
 	local Bar2 = createSplitBar(45)
 
-    -- =============================================================================
--- VORTEX WINDOW RUNTIME MODIFIERS (SETTERS)
--- =============================================================================
-
--- Ana Hub Başlığını Değiştirir (hubName)
-function Window:SetTitle(newTitle)
-    if typeof(newTitle) == "string" then
-        -- Buradaki "TitleLabel" ismini kendi kaynak kodundaki TextLabel nesnesinin ismiyle değiştir!
-        if MainFrame and MainFrame:FindFirstChild("TitleLabel") then
-            MainFrame.TitleLabel.Text = newTitle
-        elseif WindowLabel then -- Eğer değişken direkt tanımlıysa
-            WindowLabel.Text = newTitle
-        end
-    end
-end
-
--- Alt Başlığı / Versiyon Yazısını Değiştirir (SubText)
-function Window:SetSubtitle(newSubtitle)
-    if typeof(newSubtitle) == "string" then
-        -- Buradaki "SubtitleLabel" veya "VersionLabel" ismini kendi nesne isminle değiştir!
-        if MainFrame and MainFrame:FindFirstChild("SubtitleLabel") then
-            MainFrame.SubtitleLabel.Text = newSubtitle
-        elseif SubtitleLabel then -- Eğer değişken direkt tanımlıysa
-            SubtitleLabel.Text = newSubtitle
-        end
-    end
-end
+    
 
 	----------------------------------------------------------------
 	-- MAIN WINDOW STRUCTURE
@@ -792,8 +766,31 @@ end
 		}):Play()
 	end)
 
+		-- =============================================================================
+	-- VORTEX WINDOW RUNTIME MODIFIERS (SETTERS)
+	-- =============================================================================
+
+	-- Ana Hub Başlığını Canlı Değiştirir
+	function self:SetTitle(newTitle)
+		if typeof(newTitle) == "string" then
+			if WindowTitle then
+				WindowTitle.Text = newTitle
+			end
+		end
+	end
+
+	-- Alt Başlığı / Versiyon Metnini Canlı Değiştirir
+	function self:SetSubtitle(newSubtitle)
+		if typeof(newSubtitle) == "string" then
+			if WindowSubTitle then
+				WindowSubTitle.Text = newSubtitle
+			end
+		end
+	end
+
 	return self
 end
+
 
 
 return PremiumLib
