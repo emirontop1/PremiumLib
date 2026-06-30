@@ -456,6 +456,9 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 		------------------------------------------------------------
 		-- ELEMENT 1: BORDERLI BUTTON
 		------------------------------------------------------------
+				------------------------------------------------------------
+		-- ELEMENT 1: BORDERLI BUTTON
+		------------------------------------------------------------
 		function tabData:CreateButton(btnText, callback)
 			local btnInstance = {}
 			
@@ -494,13 +497,19 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 				if callback then callback() end
 			end)
 			
-			-- [SETTER] Dışarıdan Buton Yazısını Değiştirme
+			-- [SETTER 1] Dışarıdan Buton Yazısını Değiştirme (Eski Metot)
 			function btnInstance:SetText(newText)
 				Button.Text = newText
+			end
+
+			-- [SETTER 2] Dışarıdan Buton Başlığını Değiştirme (Yeni İstediğin Metot)
+			function btnInstance:SetTitle(newTitle)
+				Button.Text = newTitle
 			end
 			
 			return btnInstance
 		end
+		
 
 		------------------------------------------------------------
 		-- ELEMENT 2: ANIMATED TOGGLE
