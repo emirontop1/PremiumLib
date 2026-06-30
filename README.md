@@ -1,28 +1,10 @@
-#  Vortex Hub 
-
-Bu depo, **PremiumLib** arayüz kütüphanesi (UI Library) kullanılarak geliştirilmiş, yüksek performanslı ve modüler bir kullanıcı arayüzü scriptinin kaynak kodunu ve detaylı kullanım kılavuzunu içermektedir.
-
-Arayüz, tüm popüler yürütme ortamları (executor'lar) ile tam uyumlu ve optimize bir şekilde çalışacak şekilde tasarlanmıştır.
-
----
-
-## 💻 Sistem Gereksinimleri
-
-Scriptin sorunsuz çalışabilmesi için yürütüldüğü ortamın (Executor) aşağıdaki standart fonksiyonları desteklemesi gerekir:
-* `loadstring()` (Uzak sunucudan gelen kodu derlemek için)
-* `game:HttpGet()` (Kütüphane kaynak kodunu internetten çekmek için)
-
----
-
-## 🚀 Hızlı Kurulum (Quick Start)
-
-Aşağıdaki hazır kodu executor'ınıza yapıştırarak arayüzü hemen başlatabilirsiniz:
+example:
 
 ```lua
 --// Vortex Hub Başlatılıyor...
-local Vortex = loadstring(game:HttpGet('[https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua"))()
+local Vortex = loadstring(game:HttpGet('https://raw.githubusercontent.com/emirontop1/PremiumLib/refs/heads/main/Src/source.lua'))()
 
-local MyWindow = Vortex.CreateWindow("Vortex Hub", "Dynamic UI Ready", "negar?", "nega")
+local MyWindow = Vortex:CreateWindow("Vortex Hub", "Dynamic UI Ready", "negar?", "nega")
 local MainTab = MyWindow:CreateTab("Main")
 
 -- Elemanları değişkenlere kaydediyoruz
@@ -42,12 +24,9 @@ MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified b
 	MyToggle:SetState(true or false)
 end)
 
--- Butona basıldığında yukarıdaki fonksiyonların çalışmasını sağlayan test mekanizması:
-
--- Butonun asıl tıklama fonksiyonunu atayalım:
--- Not: createButton yapısında callback'i manipüle etmek için kütüphanenin orijinal yapısı korunmuştur.
--- Set fonksiyonlarının tam testi için aşağıda küçük bir gecikmeli (delay) simülasyon yapalım:
-
-
+-- Note: createButton yapısında callback'i manipüle etmek için kütüphanenin orijinal yapısı korunmuştur.
 
 ```
+
+
+good luck... u can edit and make ur own.
