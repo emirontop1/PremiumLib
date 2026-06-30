@@ -70,7 +70,7 @@ local function createPerfectTriangle(parent, size, position, rotation)
 	return triangleFrame
 end
 
-function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescription)
+function PremiumLib:CreateWindow(hubName, SubText, LoadingText, LoadingDescription)
 	local self = setmetatable({}, PremiumLib)
 	self.Tabs = {}
 	self.ActiveTab = nil
@@ -178,6 +178,34 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 
 	local Bar1 = createSplitBar(-45)
 	local Bar2 = createSplitBar(45)
+
+    -- =============================================================================
+-- VORTEX WINDOW RUNTIME MODIFIERS (SETTERS)
+-- =============================================================================
+
+-- Ana Hub Başlığını Değiştirir (hubName)
+function Window:SetTitle(newTitle)
+    if typeof(newTitle) == "string" then
+        -- Buradaki "TitleLabel" ismini kendi kaynak kodundaki TextLabel nesnesinin ismiyle değiştir!
+        if MainFrame and MainFrame:FindFirstChild("TitleLabel") then
+            MainFrame.TitleLabel.Text = newTitle
+        elseif WindowLabel then -- Eğer değişken direkt tanımlıysa
+            WindowLabel.Text = newTitle
+        end
+    end
+end
+
+-- Alt Başlığı / Versiyon Yazısını Değiştirir (SubText)
+function Window:SetSubtitle(newSubtitle)
+    if typeof(newSubtitle) == "string" then
+        -- Buradaki "SubtitleLabel" veya "VersionLabel" ismini kendi nesne isminle değiştir!
+        if MainFrame and MainFrame:FindFirstChild("SubtitleLabel") then
+            MainFrame.SubtitleLabel.Text = newSubtitle
+        elseif SubtitleLabel then -- Eğer değişken direkt tanımlıysa
+            SubtitleLabel.Text = newSubtitle
+        end
+    end
+end
 
 	----------------------------------------------------------------
 	-- MAIN WINDOW STRUCTURE
