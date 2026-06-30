@@ -48,7 +48,7 @@ local MySetThinksButton = MainTab:CreateButton("Set Name,Status etc", function()
     end 
     
     -- Büyük/küçük harf hatası düzeltildi (MyParagraph)
-    MyParagraph:SetText("Status: COMPLETE!", "All parameters successfully verified by the core engine.")
+    MyParagraph:SetText("Status: COMPLETE!" .. tostring(math.random(1,10000)), "All parameters successfully verified by the core engine." .. tostring(math.random(1,10000)))
     
     MyTextBox:SetText(tostring(math.random(1,10000))) 
     MyToggle:SetText("İdk" .. tostring(math.random(1,10000)))
@@ -63,4 +63,3 @@ end)
 
 
 good luck... u can edit and make ur own.
-👁️
