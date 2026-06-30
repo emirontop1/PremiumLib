@@ -735,7 +735,144 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 
 		return tabData
 	end
+    		------------------------------------------------------------
+		-- SPECIAL SUB-SYSTEM: SECTION & SUB-TAB SYSTEM
+		------------------------------------------------------------
+		function tabData:CreateSection(sectionTitle)
+			local sectionInstance = {}
+			
+			local SectionFrame = Instance.new("Frame")
+			SectionFrame.Size = UDim2.new(1, -10, 0, 28)
+			SectionFrame.BackgroundTransparency = 1
+			SectionFrame.Parent = Page
+			
+			local SectionLabel = Instance.new("TextLabel")
+			SectionLabel.Size = UDim2.new(1, -10, 1, 0)
+			SectionLabel.Position = UDim2.new(0, 5, 0, 0)
+			SectionLabel.BackgroundTransparency = 1
+			SectionLabel.Text = sectionTitle:upper()
+			SectionLabel.Font = Enum.Font.GothamBold
+			SectionLabel.TextSize = 11
+			SectionLabel.TextColor3 = COLORS.Accent
+			SectionLabel.TextXAlignment = Enum.TextXAlignment.Left
+			SectionLabel.Parent = SectionFrame
+			
+			-- Section Başlığını Değiştirme (SetTitle / SetText)
+			function sectionInstance:SetTitle(newTitle)
+				if typeof(newTitle) == "string" then SectionLabel.Text = newTitle:upper() end
+			end
+			function sectionInstance:SetText(newText)
+				if typeof(newText) == "string" then SectionLabel.Text = newText:upper() end
+			end
+			
+			return sectionInstance
+		end
 
+		function tabData:CreateSubTabContainer()
+			local subTabContainer = {SubTabs = {}, ActiveSubTab = nil}
+			
+			-- Sub-Tab Butonlarının Dizileceği Üst Panel
+			local SubNavBar = Instance.new("Frame")
+			SubNavBar.Size = UDim2.new(1, -10, 0, 30)
+			SubNavBar.BackgroundColor3 = COLORS.Sidebar
+			SubNavBar.BorderSizePixel = 0
+			SubNavBar.Parent = Page
+			Instance.new("UICorner", SubNavBar).CornerRadius = UDim.new(0, 6)
+			
+			local SubNavStroke = Instance.new("UIStroke")
+			SubNavStroke.Color = COLORS.Border
+			SubNavStroke.Thickness = 1
+			SubNavStroke.Parent = SubNavBar
+			
+			local SubListLayout = Instance.new("UIListLayout")
+			SubListLayout.FillDirection = Enum.FillDirection.Horizontal
+			SubListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			SubListLayout.Padding = UDim.new(0, 2)
+			SubListLayout.Parent = SubNavBar
+			
+			-- Sub-Tab İçeriklerinin (Elementlerinin) Koyulacağı Alt Panel
+			local SubPageContainer = Instance.new("Frame")
+			SubPageContainer.Size = UDim2.new(1, -10, 0, 0)
+			SubPageContainer.AutomaticSize = Enum.AutomaticSize.Y
+			SubPageContainer.BackgroundTransparency = 1
+			SubPageContainer.Parent = Page
+			
+			local SubPageLayout = Instance.new("UIListLayout")
+			SubPageLayout.Padding = UDim.new(0, 6)
+			SubPageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+			SubPageLayout.Parent = SubPageContainer
+			
+			function subTabContainer:CreateSubTab(subTabName)
+				local subTabData = {}
+				
+				local SubButton = Instance.new("TextButton")
+				SubButton.Size = UDim2.new(0, 100, 1, 0)
+				SubButton.BackgroundTransparency = 1
+				SubButton.Text = subTabName
+				SubButton.Font = Enum.Font.GothamMedium
+				SubButton.TextSize = 12
+				SubButton.TextColor3 = COLORS.TextMuted
+				SubButton.AutoButtonColor = false
+				SubButton.Parent = SubNavBar
+				Instance.new("UICorner", SubButton).CornerRadius = UDim.new(0, 6)
+				
+				local SubPage = Instance.new("Frame")
+				SubPage.Size = UDim2.new(1, 0, 0, 0)
+				SubPage.AutomaticSize = Enum.AutomaticSize.Y
+				SubPage.BackgroundTransparency = 1
+				SubPage.Visible = false
+				SubPage.Parent = SubPageContainer
+				
+				local SubInnerLayout = Instance.new("UIListLayout")
+				SubInnerLayout.Padding = UDim.new(0, 6)
+				SubInnerLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+				SubInnerLayout.Parent = SubPage
+				
+				-- Ana Tab fonksiyonlarını Sub-Tab'e miras bırakıyoruz (Cuk otursun diye)
+				subTabData.CreateButton = function(_, ...) return tabData.CreateButton({Page = SubPage}, ...) end
+				subTabData.CreateToggle = function(_, ...) return tabData.CreateToggle({Page = SubPage}, ...) end
+				subTabData.CreateTextBox = function(_, ...) return tabData.CreateTextBox({Page = SubPage}, ...) end
+				subTabData.CreateParagraph = function(_, ...) return tabData.CreateParagraph({Page = SubPage}, ...) end
+				subTabData.CreateSection = function(_, ...) return tabData.CreateSection({Page = SubPage}, ...) end
+				
+				local function selectSubTab()
+					if subTabContainer.ActiveSubTab == subTabData then return end
+					if subTabContainer.ActiveSubTab then
+						local prev = subTabContainer.ActiveSubTab
+						prev.Button.BackgroundTransparency = 1
+						prev.Button.TextColor3 = COLORS.TextMuted
+						prev.Page.Visible = false
+					end
+					subTabContainer.ActiveSubTab = subTabData
+					SubButton.BackgroundTransparency = 0.9
+					SubButton.BackgroundColor3 = COLORS.Accent
+					SubButton.TextColor3 = COLORS.Text
+					SubPage.Visible = true
+				end
+				
+				SubButton.MouseButton1Click:Connect(selectSubTab)
+				subTabData.Button = SubButton
+				subTabData.Page = SubPage
+				
+				-- Başlık değiştirme modifierları
+				function subTabData:SetTitle(newTitle)
+					if typeof(newTitle) == "string" then SubButton.Text = newTitle end
+				end
+				function subTabData:SetText(newText)
+					if typeof(newText) == "string" then SubButton.Text = newText end
+				end
+				
+				if #subTabContainer.SubTabs == 0 then
+					selectSubTab()
+				end
+				
+				table.insert(subTabContainer.SubTabs, subTabData)
+				return subTabData
+			end
+			
+			return subTabContainer
+	end
+	
 	----------------------------------------------------------------
 	-- INTRO ANIMATION DISPATCHER
 	----------------------------------------------------------------
