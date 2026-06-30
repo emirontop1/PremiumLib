@@ -714,6 +714,24 @@ function PremiumLib.CreateWindow(hubName, SubText, LoadingText, LoadingDescripti
 
 			return paragraphInstance
 		end
+				-- =============================================================================
+		-- VORTEX TAB RUNTIME MODIFIERS (SETTERS)
+		-- =============================================================================
+
+		-- [SETTER 1] Dışarıdan Sekme Yazısını Değiştirme
+		function tabData:SetText(newText)
+			if typeof(newText) == "string" then
+				TabButton.Text = "   " .. newText
+			end
+		end
+
+		-- [SETTER 2] Dışarıdan Sekme Başlığını Değiştirme (Alternatif)
+		function tabData:SetTitle(newTitle)
+			if typeof(newTitle) == "string" then
+				TabButton.Text = "   " .. newTitle
+			end
+		end
+		
 
 		return tabData
 	end
